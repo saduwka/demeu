@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Демеу · Қырқынан шығару</title>
+<meta name="description" content="Демеудің қырқынан шығару тойына шақыру">
+<meta property="og:title" content="Демеу · Қырқынан шығару">
+<meta property="og:description" content="Сіздерді ұлымыз Демеудің қырқынан шығару тойына шақырамыз">
+<meta property="og:image" content="assets/og.jpg">
+<meta name="theme-color" content="#fcf8ef">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap&subset=cyrillic-ext" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --paper:#fcf8ef;
+  --paper-2:#f3f1e3;
+  --ink:#3d4330;
+  --ink-soft:#6e7360;
+  --blue:#8d9c6c;
+  --blue-deep:#566637;
+  --gold:#b89663;
+  --gold-soft:#dcc59b;
+  --line:rgba(138,156,107,.38);
+  --script:'Great Vibes',cursive;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Manrope',system-ui,sans-serif;
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-variant-numeric:lining-nums;
+  font-family:var(--sans);color:var(--ink);background:var(--paper);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.locked{overflow:hidden}
+img{display:block;max-width:100%;height:auto}
+button,input{font:inherit;color:inherit}
+.wrap{max-width:560px;margin:0 auto;padding:0 24px;position:relative}
+
+/* ---------- Cover ---------- */
+.cover{display:none}
+.js .cover{
+  display:flex;position:fixed;inset:0;z-index:50;background:var(--paper);
+  flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;
+  transition:opacity .9s ease, visibility .9s;
+}
+.cover.hide{opacity:0;visibility:hidden}
+.cover::before{
+  content:"";position:absolute;inset:0;background:url(assets/leaf-tl.webp) left top/min(62vw,320px) auto no-repeat,url(assets/leaf-br.webp) right bottom/min(62vw,320px) auto no-repeat;
+  pointer-events:none;
+}
+.cover>*{position:relative}
+.cover .eyebrow{margin-bottom:18px}
+.cover h2{font-family:var(--script);font-weight:400;font-size:clamp(78px,24vw,120px);line-height:1;color:var(--blue-deep)}
+.cover .rite{font-family:var(--serif);font-size:26px;color:var(--ink);margin-top:4px}
+.cover .to{margin-top:16px;font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink-soft)}
+.seal{
+  margin-top:40px;width:112px;height:112px;border-radius:50%;border:none;cursor:pointer;
+  background:radial-gradient(circle at 35% 30%,#7c8c55,#4f5e31 72%);color:#fbf6e8;
+  box-shadow:0 10px 30px rgba(70,85,40,.35), inset 0 0 0 5px rgba(255,255,255,.16), inset 0 0 0 7px rgba(220,197,155,.5);
+  display:grid;place-items:center;font-family:var(--script);font-size:58px;line-height:1;padding-top:6px;
+  animation:pulse 2.4s ease-in-out infinite;
+}
+.seal:focus-visible{outline:2px solid var(--blue-deep);outline-offset:6px}
+.cover .hint{margin-top:18px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+/* ---------- Shared ---------- */
+.eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.section{padding:72px 0;text-align:center;position:relative}
+.section h3{font-family:var(--serif);font-weight:500;letter-spacing:.005em;font-size:clamp(30px,8vw,42px);line-height:1.1;margin:10px 0 22px;color:var(--blue-deep)}
+.ornament{width:170px;height:21px;margin:0 auto;color:var(--blue-deep);display:block}
+.lead{font-family:var(--serif);font-size:clamp(21px,5.4vw,25px);line-height:1.45;color:var(--ink)}
+.muted{color:var(--ink-soft)}
+.reveal{transition:opacity 1s ease, transform 1s ease}
+.js .reveal{opacity:0;transform:translateY(24px)}
+.js .reveal.in{opacity:1;transform:none}
+
+/* ---------- Top bar ---------- */
+.lang{
+  position:fixed;top:14px;right:14px;z-index:40;display:flex;gap:2px;padding:4px;border-radius:999px;
+  background:rgba(250,245,234,.85);backdrop-filter:blur(8px);border:1px solid var(--line);
+}
+.lang button{border:none;background:none;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.08em;cursor:pointer;color:var(--ink-soft)}
+.lang button[aria-pressed="true"]{background:var(--blue-deep);color:#fff}
+.music{
+  position:fixed;bottom:18px;right:18px;z-index:40;width:48px;height:48px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(250,245,234,.92);cursor:pointer;display:none;place-items:center;color:var(--blue-deep);
+}
+.music.on{display:grid}
+.music.playing svg{animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Hero ---------- */
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:76px 0 24px;position:relative}
+.hero::before{content:'';position:absolute;inset:0;background:url(assets/leaf-tl.webp) left top/min(46vw,260px) auto no-repeat;pointer-events:none;opacity:.9}
+.hero .art{width:min(100vw,560px);margin:-6px auto 0;}
+.hero h1{font-family:var(--script);font-weight:400;line-height:1;color:var(--blue-deep);font-size:clamp(96px,30vw,150px);margin-top:4px}
+.hero .sub{font-family:var(--serif);font-size:clamp(28px,7.6vw,36px);color:var(--ink);margin-top:-6px;line-height:1.1}
+.hero .tag{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink-soft);margin-top:10px}
+.date-strip{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:18px;font-family:var(--serif);color:var(--ink)}
+.date-strip span{font-size:15px;letter-spacing:.24em;text-transform:uppercase;font-family:var(--sans);color:var(--ink-soft);padding:8px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);min-width:84px}
+.date-strip b{font-weight:500;font-size:56px;line-height:1;color:var(--gold)}
+.scroll-cue{margin-top:4px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);text-decoration:none}
+.scroll-cue::after{content:"";display:block;width:1px;height:38px;background:var(--gold);margin:10px auto 0;animation:drop 2s ease-in-out infinite;transform-origin:top}
+@keyframes drop{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- Invitation card ---------- */
+.card{
+  background:url(assets/leaf-tl.webp) left top/112px auto no-repeat,url(assets/leaf-br.webp) right bottom/104px auto no-repeat,#fffefa;border:1px solid var(--line);border-radius:var(--radius);padding:92px 26px 64px;position:relative;
+  box-shadow:0 20px 50px -30px rgba(63,95,138,.35);
+}
+.card::before{content:"";position:absolute;inset:8px;border:1px solid var(--line);border-radius:12px;pointer-events:none}
+.card .guest{font-family:var(--serif);font-style:italic;font-size:28px;line-height:1.25;color:var(--blue-deep);margin-bottom:14px}
+
+/* ---------- Countdown ---------- */
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:8px}
+.count div{background:#fffdf7;border:1px solid var(--line);border-radius:14px;padding:16px 4px 12px}
+.count b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(34px,10vw,46px);line-height:1;color:var(--blue-deep);font-variant-numeric:lining-nums tabular-nums}
+.count small{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- Calendar ---------- */
+.cal{margin:34px auto 0;max-width:340px}
+.cal .month{font-family:var(--serif);font-size:26px;color:var(--ink);margin-bottom:12px}
+.cal .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:14px}
+.cal .grid .wd{font-size:11px;letter-spacing:.08em;color:var(--gold);font-weight:600;text-transform:uppercase;padding-bottom:6px}
+.cal .grid span{aspect-ratio:1;display:grid;place-items:center;color:var(--ink-soft)}
+.cal .grid .day{position:relative;color:#fff;font-weight:600}
+.cal .grid .day::before{content:"";position:absolute;inset:2px;z-index:-1;background:var(--blue-deep);border-radius:50%}
+.cal .grid .day::after{content:"";position:absolute;inset:-3px;border:1px solid var(--gold);border-radius:50%}
+.cal .grid{isolation:isolate}
+
+/* ---------- Program ---------- */
+.timeline{list-style:none;text-align:left;position:relative;margin-top:10px}
+.timeline::before{content:"";position:absolute;left:68px;top:8px;bottom:8px;width:1px;background:var(--line)}
+.timeline li{display:grid;grid-template-columns:56px 1fr;gap:28px;padding:14px 0;position:relative}
+.timeline li::before{content:"";position:absolute;left:64px;top:24px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:1px solid var(--gold)}
+.timeline time{font-family:var(--serif);font-size:24px;color:var(--blue-deep);line-height:1.2;text-align:right}
+.timeline h4{font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.25}
+.timeline p{font-size:14px;color:var(--ink-soft)}
+
+/* ---------- Ritual ---------- */
+.rituals{display:grid;gap:12px;margin-top:6px}
+.rituals article{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start;text-align:left;padding:20px;background:#fffdf7;border:1px solid var(--line);border-radius:var(--radius)}
+.rituals .n{font-family:var(--serif);font-size:38px;font-weight:500;line-height:1;color:var(--gold);text-align:center}
+.rituals h4{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.25;color:var(--blue-deep)}
+.rituals p{font-size:14px;color:var(--ink-soft);margin-top:4px}
+
+/* ---------- Venue ---------- */
+.sprig{width:150px;margin:0 auto 14px}
+.venue-name{font-family:var(--serif);font-size:30px;line-height:1.15;color:var(--ink)}
+.venue-addr{margin-top:6px;color:var(--ink-soft)}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 24px;border-radius:999px;
+  font-size:14px;font-weight:600;letter-spacing:.04em;text-decoration:none;cursor:pointer;border:1px solid var(--blue-deep);
+  transition:background .25s,color .25s,transform .2s;
+}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--blue-deep);color:#fff}
+.btn.primary:hover{background:#334f75}
+.btn.ghost{background:transparent;color:var(--blue-deep)}
+.btn.ghost:hover{background:rgba(63,95,138,.08)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ---------- RSVP ---------- */
+.rsvp{text-align:left;display:grid;gap:18px}
+.field label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;font-weight:600}
+.field input[type=text]{width:100%;min-height:50px;padding:0 16px;border-radius:12px;border:1px solid var(--line);background:#fffdf7;font-size:16px}
+.field input[type=text]:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(111,143,184,.2)}
+.choices{display:grid;gap:8px}
+.choices label{
+  display:flex;align-items:center;gap:12px;min-height:50px;padding:0 16px;border-radius:12px;border:1px solid var(--line);
+  background:#fffdf7;cursor:pointer;font-size:15px;text-transform:none;letter-spacing:0;color:var(--ink);font-weight:500;margin:0;
+}
+.choices input{accent-color:var(--blue-deep);width:18px;height:18px}
+.choices label:has(input:checked){border-color:var(--blue-deep);background:#f2f4ea}
+.rsvp .btn{width:100%}
+.err{color:#a14a3a;font-size:13px;min-height:1em}
+.thanks{display:none;text-align:center;padding:10px 0}
+.thanks.show{display:block}
+.thanks .lead{color:var(--blue-deep)}
+
+/* ---------- Footer ---------- */
+.hosts{padding:40px 0 210px;text-align:center;position:relative}
+.hosts::before{
+  content:"";position:absolute;inset:0;background:url(assets/leaf-br.webp) right bottom/min(46vw,240px) auto no-repeat;
+  pointer-events:none;
+}
+.hosts .bunny{width:min(60vw,260px);margin:0 auto 10px}
+.hosts .names{font-family:var(--serif);font-size:30px;line-height:1.25;color:var(--blue-deep);margin-top:10px}
+.hosts .bye{font-family:var(--serif);font-style:italic;font-size:26px;line-height:1.3;color:var(--ink-soft);margin-top:26px}
+
+.divider{display:block;margin:0 auto}
+
+@media (min-width:760px){
+  .section{padding:96px 0}
+  .card{padding:100px 56px 72px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Қошқар мүйіз ою-өрнегі (бөлгіш) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="orn" viewBox="0 0 200 24">
+    <path d="M10 12 H82 M118 12 H190" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M100 20 C 92 14 87 10.5 87 6.8 C 87 4 89.2 2 91.8 2 C 94 2 95.9 3.3 100 7 C 104.1 3.3 106 2 108.2 2 C 110.8 2 113 4 113 6.8 C 113 10.5 108 14 100 20 Z" fill="currentColor"/>
+  </symbol>
+</svg>
+
+<!-- Мұқаба -->
+<div class="cover" id="cover" role="dialog" aria-label="Шақыру">
+  <p class="eyebrow" data-i18n="coverEyebrow">Шақыру</p>
+  <h2 id="coverName">Демеу</h2>
+  <p class="rite">қырқынан шығару</p>
+  <svg class="ornament" style="margin-top:16px" aria-hidden="true"><use href="#orn"/></svg>
+  <p class="to" id="coverTo" data-i18n="coverTo">Құрметті қонақ</p>
+  <button class="seal" id="openBtn" aria-label="Шақыруды ашу">Д</button>
+  <p class="hint" data-i18n="coverHint">Шақыруды ашу</p>
+</div>
+
+<div class="lang" role="group" aria-label="Тіл / Язык">
+  <button type="button" data-lang="kk" aria-pressed="true">ҚАЗ</button>
+  <button type="button" data-lang="ru" aria-pressed="false">РУС</button>
+</div>
+
+<button class="music" id="musicBtn" type="button" aria-label="Музыка">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+</button>
+<audio id="audio" loop preload="none"></audio>
+
+<main>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="heroEyebrow">Шақыру</p>
+      <h1 class="reveal" id="childName">Демеу</h1>
+      <p class="sub reveal">қырқынан шығару</p>
+      <svg class="ornament reveal" style="margin-top:14px" aria-hidden="true"><use href="#orn"/></svg>
+      <div class="date-strip reveal">
+        <span id="dsMonth">Қараша</span><b id="dsDay">21</b><span id="dsYear">2026</span>
+      </div>
+    </div>
+    <img class="art reveal" src="assets/hero.webp" alt="" width="1024" height="968">
+    <a class="scroll-cue" href="#invite" data-i18n="scroll">Төмен</a>
+  </header>
+
+  <!-- Шақыру мәтіні -->
+  <section class="section" id="invite" style="padding-top:24px">
+    <div class="wrap">
+      <div class="card reveal">
+        <p class="guest" id="guestLine" data-i18n="dear">Құрметті ағайын-туыс, дос-жарандар!</p>
+        <p class="lead" data-i18n="inviteText">Сіздерді ұлымыз Демеудің қырқынан шығару тойына арналған ақ дастарханымыздың қадірлі қонағы болуға шақырамыз.</p>
+        <svg class="ornament divider" style="margin-top:28px" aria-hidden="true"><use href="#orn"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Күні -->
+  <section class="section" style="padding-top:20px">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="whenEyebrow">Той уақыты</p>
+      <h3 class="reveal" id="whenTitle">21 қараша, 18:00</h3>
+      <div class="count reveal" id="countdown" aria-live="polite">
+        <div><b id="cdD">00</b><small data-i18n="d">күн</small></div>
+        <div><b id="cdH">00</b><small data-i18n="h">сағат</small></div>
+        <div><b id="cdM">00</b><small data-i18n="m">минут</small></div>
+        <div><b id="cdS">00</b><small data-i18n="s">секунд</small></div>
+      </div>
+      <div class="cal reveal">
+        <p class="month" id="calMonth">Қараша 2026</p>
+        <div class="grid" id="calGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Бағдарлама -->
+  <section class="section">
+    <div class="wrap">
+      <svg class="ornament reveal" aria-hidden="true"><use href="#orn"/></svg>
+      <p class="eyebrow reveal" style="margin-top:22px" data-i18n="progEyebrow">Бағдарлама</p>
+      <h3 class="reveal" data-i18n="progTitle">Кеш барысы</h3>
+      <ol class="timeline reveal" id="timeline"></ol>
+    </div>
+  </section>
+
+  <!-- Дәстүр -->
+  <section class="section" style="background:var(--paper-2)">
+    <div class="wrap">
+      <p class="eyebrow reveal" data-i18n="ritEyebrow">Дәстүр</p>
+      <h3 class="reveal" data-i18n="ritTitle">Қырқынан шығару</h3>
+      <p class="muted reveal" style="margin-bottom:26px" data-i18n="ritIntro">Сәби дүниеге келгеннен кейін қырық күн өткенде жасалатын ғұрып — баланың амандығы мен болашағына тілек.</p>
+      <div class="rituals" id="rituals"></div>
+    </div>
+  </section>
+
+  <!-- Мекенжай -->
+  <section class="section">
+    <div class="wrap">
+      <img class="sprig reveal" src="assets/sprig.webp" alt="" width="870" height="642">
+      <p class="eyebrow reveal" data-i18n="whereEyebrow">Мекенжай</p>
+      <h3 class="reveal" data-i18n="whereTitle">Той өтетін орын</h3>
+      <p class="venue-name reveal" id="venueName"></p>
+      <p class="venue-addr reveal" id="venueAddr"></p>
+      <div class="btns reveal">
+        <a class="btn primary" id="gisBtn" target="_blank" rel="noopener">2GIS</a>
+        <a class="btn ghost" id="gmBtn" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="section" style="padding-top:20px">
+    <div class="wrap">
+      <div class="card reveal">
+        <p class="eyebrow" data-i18n="rsvpEyebrow">Жауап беру</p>
+        <h3 data-i18n="rsvpTitle">Келесіз бе?</h3>
+        <p class="muted" style="margin:-8px 0 26px" id="rsvpNote"></p>
+        <form class="rsvp" id="rsvp" novalidate>
+          <div class="field">
+            <label for="gname" data-i18n="fName">Аты-жөніңіз</label>
+            <input type="text" id="gname" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label data-i18n="fAnswer">Жауабыңыз</label>
+            <div class="choices">
+              <label><input type="radio" name="ans" value="yes" checked> <span data-i18n="a1">Иә, келемін</span></label>
+              <label><input type="radio" name="ans" value="plus"> <span data-i18n="a2">Жұбайыммен келемін</span></label>
+              <label><input type="radio" name="ans" value="no"> <span data-i18n="a3">Өкінішке қарай, келе алмаймын</span></label>
+            </div>
+          </div>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn primary" type="submit" data-i18n="send">WhatsApp арқылы жіберу</button>
+        </form>
+        <div class="thanks" id="thanks">
+          <p class="lead" data-i18n="thanks">Рақмет! Жауабыңыз жіберілді.</p>
+          <button class="btn ghost" type="button" id="again" style="margin-top:18px" data-i18n="again">Өзгерту</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Той иелері -->
+  <footer class="hosts">
+    <div class="wrap">
+      <img class="bunny reveal" src="assets/bunny.webp" alt="" width="709" height="608" >
+      <p class="eyebrow reveal" style="margin-top:6px" data-i18n="hostsEyebrow">Той иелері</p>
+      <p class="names reveal" id="hostNames"></p>
+      <p class="bye reveal" data-i18n="bye">Сіздерді асыға күтеміз!</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+/* =========================================================
+   ОСЫ ЖЕРДЕ ӨЗГЕРТІҢІЗ / РЕДАКТИРУЙТЕ ЗДЕСЬ
+   ========================================================= */
+const CONFIG = {
+  child: 'Демеу',
+  date: '2026-11-21T18:00:00+05:00',          // күні мен уақыты (Астана, UTC+5)
+  venue: { kk: '«Ақ Шаңырақ» мейрамханасы', ru: 'Ресторан «Ақ Шаңырақ»' },
+  address: { kk: 'Астана қ., Қабанбай батыр даңғылы, 1', ru: 'г. Астана, пр. Кабанбай батыра, 1' },
+  mapQuery: 'Астана Қабанбай батыр 1',          // 2GIS / Google Maps іздеу сұрауы
+  gisUrl: '',                                    // нақты 2GIS сілтемесі болса — қойыңыз
+  whatsapp: '77000000000',                       // жауап баратын нөмір (тек цифрлар)
+  rsvpUntil: { kk: '15 қарашаға дейін', ru: 'до 15 ноября' },
+  hosts: { kk: 'Демеудің ата-анасы,<br>атасы мен әжесі', ru: 'Родители Демеу,<br>дедушка и бабушка' },
+  music: '',                                     // мысалы: 'assets/music.mp3' (бос болса — батырма жасырын)
+  program: [
+    { t:'18:00', kk:['Қонақтарды қарсы алу','Шай, кездесу, естелік суреттер'], ru:['Встреча гостей','Чай, знакомство, фото на память'] },
+    { t:'18:30', kk:['Қырқынан шығару рәсімі','Қырық қасық су, алғашқы шаш пен тырнақ'], ru:['Обряд Қырқынан шығару','Сорок ложек воды, первые волосы и ноготки'] },
+    { t:'19:00', kk:['Ақ дастархан','Кешкі ас және жақсы тілектер'], ru:['Праздничный дастархан','Ужин и добрые пожелания'] },
+    { t:'21:00', kk:['Бата','Үлкендердің ақ батасы'], ru:['Бата','Благословение старших'] }
+  ]
+};
+/* ========================================================= */
+
+const RIT = {
+  kk:[
+    ['40','Қырық қасық су','Ақ жаулықты әже сәбиге қырық қасық су құйып, «Отыз омыртқасы бекісін, қырық қабырғасы қатсын» деп тілек айтады.'],
+    ['I','Алғашқы шаш','Баланың алғашқы шашын ақ ниетті ер адам алады, шашты матаға түйіп, киіміне тағып қояды.'],
+    ['II','Тырнақ алу','Ісмер әйел тырнағын алып, баланың шебер, епті болуын тілейді.']
+  ],
+  ru:[
+    ['40','Сорок ложек воды','Почтенная бабушка выливает на малыша сорок ложек воды с пожеланием: «Пусть окрепнут тридцать позвонков и сорок рёбер».'],
+    ['I','Первые волосы','Уважаемый мужчина состригает первые волосы малыша; их заворачивают в ткань и прикалывают к одежде.'],
+    ['II','Первые ноготки','Искусная мастерица подстригает ноготки, желая ребёнку вырасти умелым.']
+  ]
+};
+
+const T = {
+  kk:{
+    coverEyebrow:'Шақыру', coverTitle:'Қырқынан<br>шығару', coverTo:'Құрметті қонақ', coverHint:'Шақыруды ашу',
+    heroEyebrow:'Шақыру', heroSub:'ұлымыздың алғашқы қырық күні', scroll:'Төмен',
+    dear:'Құрметті ағайын-туыс, дос-жарандар!',
+    inviteText:`Сіздерді ұлымыз ${CONFIG.child}дің қырқынан шығару тойына арналған ақ дастарханымыздың қадірлі қонағы болуға шақырамыз.`,
+    whenEyebrow:'Той уақыты', d:'күн', h:'сағат', m:'минут', s:'секунд',
+    progEyebrow:'Бағдарлама', progTitle:'Кеш барысы',
+    ritEyebrow:'Дәстүр', ritTitle:'Қырқынан шығару',
+    ritIntro:'Сәби дүниеге келгеннен кейін қырық күн өткенде жасалатын ғұрып — баланың амандығы мен болашағына тілек.',
+    whereEyebrow:'Мекенжай', whereTitle:'Той өтетін орын',
+    rsvpEyebrow:'Жауап беру', rsvpTitle:'Келесіз бе?', rsvpNote:'Жауабыңызды {d} беруіңізді сұраймыз',
+    fName:'Аты-жөніңіз', fAnswer:'Жауабыңыз', a1:'Иә, келемін', a2:'Жұбайыммен келемін', a3:'Өкінішке қарай, келе алмаймын',
+    send:'WhatsApp арқылы жіберу', thanks:'Рақмет! Жауабыңыз жіберілді.', again:'Өзгерту', errName:'Аты-жөніңізді жазыңыз',
+    hostsEyebrow:'Той иелері', bye:'Сіздерді асыға күтеміз!', started:'Той басталды',
+    msg:(n,a)=>`Сәлеметсіз бе! ${CONFIG.child}дің қырқынан шығару тойына жауап:\nАты-жөні: ${n}\nЖауабы: ${a}`,
+    months:['қаңтар','ақпан','наурыз','сәуір','мамыр','маусым','шілде','тамыз','қыркүйек','қазан','қараша','желтоқсан'],
+    wd:['Дс','Сс','Ср','Бс','Жм','Сб','Жс'], dearName:n=>`Құрметті ${n}!`
+  },
+  ru:{
+    coverEyebrow:'Приглашение', coverTitle:'Қырқынан<br>шығару', coverTo:'Дорогой гость', coverHint:'Открыть приглашение',
+    heroEyebrow:'Приглашение', heroSub:'первые сорок дней нашего сына', scroll:'Листать',
+    dear:'Дорогие родные и друзья!',
+    inviteText:`Приглашаем вас разделить с нами радость — праздник Қырқынан шығару нашего сына ${CONFIG.child} — и стать почётными гостями нашего дастархана.`,
+    whenEyebrow:'Когда', d:'дней', h:'часов', m:'минут', s:'секунд',
+    progEyebrow:'Программа', progTitle:'Ход вечера',
+    ritEyebrow:'Традиция', ritTitle:'Қырқынан шығару',
+    ritIntro:'Обряд, который проводят на сороковой день после рождения малыша, — пожелание ему здоровья и счастливой судьбы.',
+    whereEyebrow:'Адрес', whereTitle:'Место проведения',
+    rsvpEyebrow:'Ответ', rsvpTitle:'Вы придёте?', rsvpNote:'Пожалуйста, ответьте {d}',
+    fName:'Ваше имя', fAnswer:'Ваш ответ', a1:'Да, приду', a2:'Приду с супругом(ой)', a3:'К сожалению, не смогу',
+    send:'Отправить в WhatsApp', thanks:'Спасибо! Ваш ответ отправлен.', again:'Изменить', errName:'Пожалуйста, укажите имя',
+    hostsEyebrow:'С любовью', bye:'С нетерпением ждём вас!', started:'Праздник начался',
+    msg:(n,a)=>`Здравствуйте! Ответ на приглашение на Қырқынан шығару ${CONFIG.child}:\nИмя: ${n}\nОтвет: ${a}`,
+    months:['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'],
+    monthsGen:['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],
+    wd:['Пн','Вт','Ср','Чт','Пт','Сб','Вс'], dearName:n=>`Дорогой(ая) ${n}!`
+  }
+};
+
+const $ = s => document.querySelector(s);
+const params = new URLSearchParams(location.search);
+const guest = (params.get('g') || params.get('guest') || '').trim().slice(0,60);
+let lang = params.get('lang') === 'ru' ? 'ru' : (localStorage.getItem('inv-lang') || 'kk');
+const target = new Date(CONFIG.date);
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// Date parts in Astana time regardless of viewer's timezone
+const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Almaty',year:'numeric',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false})
+  .formatToParts(target).map(p=>[p.type,p.value]));
+const Y=+parts.year, M=+parts.month-1, D=+parts.day, HM=`${parts.hour}:${parts.minute}`;
+
+function render(){
+  const t = T[lang];
+  document.documentElement.lang = lang === 'ru' ? 'ru' : 'kk';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ const v=t[el.dataset.i18n]; if(typeof v==='string') el.innerHTML=v; });
+  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang===lang));
+  if(guest){ $('#guestLine').textContent = t.dearName(guest); $('#coverTo').textContent = t.dearName(guest); }
+
+  $('#childName').textContent = CONFIG.child; $('#coverName').textContent = CONFIG.child;
+  $('#dsMonth').textContent = cap(t.months[M]);
+  $('#dsDay').textContent = D;
+  $('#dsYear').textContent = Y;
+  $('#whenTitle').textContent = lang==='ru' ? `${D} ${t.monthsGen[M]}, ${HM}` : `${D} ${t.months[M]}, ${HM}`;
+  $('#calMonth').textContent = `${cap(t.months[M])} ${Y}`;
+
+  // calendar
+  const first = (new Date(Y,M,1).getDay()+6)%7, days = new Date(Y,M+1,0).getDate();
+  let g = t.wd.map(w=>`<span class="wd">${w}</span>`).join('');
+  for(let i=0;i<first;i++) g+='<span></span>';
+  for(let d=1; d<=days; d++) g+= d===D ? `<span class="day" aria-current="date">${d}</span>` : `<span>${d}</span>`;
+  $('#calGrid').innerHTML = g;
+
+  $('#timeline').innerHTML = CONFIG.program.map(p=>`<li><time>${p.t}</time><div><h4>${p[lang][0]}</h4><p>${p[lang][1]}</p></div></li>`).join('');
+  $('#rituals').innerHTML = RIT[lang].map(r=>`<article><span class="n">${r[0]}</span><div><h4>${r[1]}</h4><p>${r[2]}</p></div></article>`).join('');
+
+  $('#venueName').textContent = CONFIG.venue[lang];
+  $('#venueAddr').textContent = CONFIG.address[lang];
+  $('#gisBtn').href = CONFIG.gisUrl || `https://2gis.kz/astana/search/${encodeURIComponent(CONFIG.mapQuery)}`;
+  $('#gmBtn').href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.mapQuery)}`;
+  $('#rsvpNote').textContent = t.rsvpNote.replace('{d}', CONFIG.rsvpUntil[lang]);
+  $('#hostNames').innerHTML = CONFIG.hosts[lang];
+  $('#openBtn').setAttribute('aria-label', t.coverHint);
+  if(guest && !$('#gname').value) $('#gname').value = guest;
+  tick();
+}
+
+function tick(){
+  const diff = target - Date.now();
+  if(diff <= 0){ $('#countdown').innerHTML = `<div style="grid-column:1/-1"><b style="font-size:32px">${T[lang].started}</b></div>`; return; }
+  const s = Math.floor(diff/1000), pad = n => String(n).padStart(2,'0');
+  const d=$('#cdD'); if(!d) return;
+  d.textContent = Math.floor(s/86400);
+  $('#cdH').textContent = pad(Math.floor(s%86400/3600));
+  $('#cdM').textContent = pad(Math.floor(s%3600/60));
+  $('#cdS').textContent = pad(s%60);
+}
+setInterval(tick, 1000);
+
+// language
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{ lang=b.dataset.lang; localStorage.setItem('inv-lang',lang); render(); }));
+
+// music
+const audio = $('#audio'), mBtn = $('#musicBtn');
+if(CONFIG.music){ audio.src = CONFIG.music; mBtn.classList.add('on'); }
+mBtn.addEventListener('click',()=>{ if(audio.paused){ audio.play().catch(()=>{}); } else audio.pause(); });
+audio.addEventListener('play',()=>mBtn.classList.add('playing'));
+audio.addEventListener('pause',()=>mBtn.classList.remove('playing'));
+
+// cover
+document.body.classList.add('locked');
+$('#openBtn').addEventListener('click',()=>{
+  $('#cover').classList.add('hide'); document.body.classList.remove('locked');
+  if(CONFIG.music) audio.play().catch(()=>{});
+  revealVisible();
+});
+
+// reveal on scroll
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.15}) : null;
+document.querySelectorAll('.reveal').forEach(el=> io ? io.observe(el) : el.classList.add('in'));
+function revealVisible(){ document.querySelectorAll('.reveal').forEach(el=>{ if(el.getBoundingClientRect().top < innerHeight) el.classList.add('in'); }); }
+
+// RSVP → WhatsApp
+$('#rsvp').addEventListener('submit', e=>{
+  e.preventDefault();
+  const t=T[lang], name=$('#gname').value.trim();
+  if(!name){ $('#err').textContent=t.errName; $('#gname').focus(); return; }
+  $('#err').textContent='';
+  const v=document.querySelector('input[name=ans]:checked').value;
+  const ans={yes:t.a1,plus:t.a2,no:t.a3}[v];
+  window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(t.msg(name,ans))}`,'_blank','noopener');
+  $('#rsvp').style.display='none'; $('#thanks').classList.add('show');
+});
+$('#again').addEventListener('click',()=>{ $('#rsvp').style.display=''; $('#thanks').classList.remove('show'); });
+
+render();
+</script>
+</body>
+</html>
