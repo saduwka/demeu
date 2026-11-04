@@ -440,7 +440,7 @@ const T = {
 const $ = s => document.querySelector(s);
 const params = new URLSearchParams(location.search);
 const guest = (params.get('g') || params.get('guest') || '').trim().slice(0,60);
-let lang = params.get('lang') === 'ru' ? 'ru' : (localStorage.getItem('inv-lang') || 'kk');
+let lang = params.get('lang') === 'ru' ? 'ru' : 'kk';
 const target = new Date(CONFIG.date);
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -498,7 +498,7 @@ function tick(){
 setInterval(tick, 1000);
 
 // language
-document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{ lang=b.dataset.lang; localStorage.setItem('inv-lang',lang); render(); }));
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{ lang=b.dataset.lang; render(); }));
 
 // music
 const audio = $('#audio'), mBtn = $('#musicBtn');
